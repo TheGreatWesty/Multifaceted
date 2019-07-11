@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Page Title</title>
+		<script src="https://code.jquery.com/jquery-3.1.1.js"></script>
+	</head>
+	<body>
+	    <style>
+body {
+	font:arial;
+	margin:0;
+}
+#navigation {
+    position:fixed;
+    left:5;
+    width:5em;
+    background-color:yellow;
+}
+#food-list {
+    left:6em;
+    position:absolute;
+    width: 10em;
+    background-color:blue;
+    text-align:center;
+}
+#food-value {
+    left: 17em;
+    position:absolute;
+    width:15em;
+    background-color:red;
+    text-align:center;
+}
+.joint-button {
+    color:green;
+}
+.total-value {
+    left:14em;
+    top:10px;
+    position:absolute;
+    width:16em;
+    background-color:grey;
+    text-align:center;
+}
+.wild {
+    background-color:white;
+    color:black;
+}
+.remove {
+    background-color:red;
+    color:yellow;
+}
+	    </style>
+		<h1>Shopping list
+	            </br>
+	        <button class="joint-button">ADD Food & Values to your list</button>
+	        <button class="wild">WILD BUTTON</button>
+	        <button class="remove">REMOVE BUTTON</button>
+	    </h1>
+	    <div>
+	        <p class="total-value">Total list value - £</p>
+	    </div>
+	    <div>
+	        <p id="navigation">Navigation</p>
+	    </div>
+	    
+	    <div>
+	        <p id="food-list">Chosen food:</p>
+	        <p id="food-value">The value of said food</p>
+	    </div>
+	    
+	    <script>
+	    let food = [];
+	    let value = [];
+	    let total
+	    //The below function deals with the food
+	    function addFood() {
+	        let a = prompt("Enter the name of your food","")
+	        food.push(a)
+	        if (a == null || a == "" || a == undefined || a == 0){
+	            alert("No value has been entered, please enter your food name using letters only")
+	            addFood();
+	        }
+	        else {
+	        $("#food-list").append("</br>" + a )
+	        }}
+	    //END
+	    
+	    //The below 2 functions deal with the value of the food
+	    function addValue() {
+	        let a = Number(prompt("Enter the value of your food",""))
+	        value.push(a)
+	        if (a == 0 || isNaN(a) || typeof a !== "number"){
+	            alert("No value has been entered, please enter the price of your chosen food item")
+	            addValue();
+	        }
+	        else {
+	        $("#food-value").append("</br> £" + a)
+	    }
+	    }
+	    function showValue() {
+	        let x = 0
+	        let y = value.length
+	        let result = 0
+	        for (x;x<y;x++){
+	            result += value[x];
+	            total = result
+	        }
+	        if (isNaN(result) || result == 0){
+	            alert("list is empty!")
+	        }
+	        else return result
+	    }
+	    //END
+	    
+	    //The below function should allow the user to remove any typed out list item
+	    function removeFood() {
+	        let a = prompt("Which food would you like to remove?","");
+	        let x = 0;
+	        let y = food.length;
+	        let z = value.length;
+	        for (x ; x < y ; x++) {
+	            if (a == food[x]){
+	                food.splice(x,1);
+	                value.splice(x,1);
+	            }
+	            else {
+	                continue
+	            };
+	        };
+	    };
+	    function refreshList () {
+	        $("#food-list").text("Chosen food:")
+	        let a = 0
+	        let b = food.length
+	        for (a; a < b; a++){
+	            $("#food-list").append("</br>" + food[a])
+	        }
+	        $("#food-value").text("The value of said food:")
+	        let c = 0
+	        let d = value.length
+	        for (c; c < d; c++){
+	            $("#food-value").append("</br> £" + value[c])
+	        }
+	        let e = 0
+	        let result = 0
+	        for (e;e<d;e++){
+	            result += value[e];
+	            total = result
+	        }
+	        
+	    }
+	    //END
+	    $(".joint-button").click( function(){
+	        addFood();
+	        addValue();
+	        showValue();
+	        $(".total-value").text("Total list value - £" + total)
+	    } );
+	    $(".wild").click( function() {
+	        $("#navigation").html("Navigation </br>" + food.length + value.length)
+	    } );
+	    $(".remove").click( function() {
+	        removeFood();
+	        refreshList();
+	        $(".total-value").text("Total list value - £" + total)
+	    })
+	    
+	    </script>
+	</body>
+</html>
